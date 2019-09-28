@@ -113,7 +113,6 @@ int main() {
         }
         int it = 0;
         for(; !vlems.empty(); it++) {
-            printState();
             update();
         }
         cout << "Case " << te << ": " << it << endl;

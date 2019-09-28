@@ -98,38 +98,6 @@ void update() {
 
 bool haslem[N][N];
 int dirs[N][N];
-void printState() {
-    for(int i = 0; i < n; i++) {
-        for(int j = 0; j < m; j++) {
-            haslem[i][j] = false;
-        }
-    }
-    for(lemming lem : vlems) {
-        PT p = lem.pt;
-        haslem[p.x][p.y] = true;
-        dirs[p.x][p.y] = lem.agenda[lem.diridx];
-    }
-    cout << "------------------" << endl;
-    for(int i = n - 1; i >= 0; i--) {
-        for(int j = 0; j < m; j++) {
-            if(haslem[i][j]) {
-                int d = dirs[i][j];
-                if(d == NORTH) {
-                    cout << "^ ";
-                }else if(d == SOUTH) {
-                    cout << "v ";
-                }else if(d == WEST) {
-                    cout << "< ";
-                }else {
-                    cout << "> ";
-                }
-            }else {
-                cout << ". ";
-            }
-        }
-        cout << endl;
-    }
-}
 
 int main() {
     ios::sync_with_stdio(false);

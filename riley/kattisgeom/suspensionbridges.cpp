@@ -6,12 +6,10 @@ using namespace std;
 
 double d, s;
 double ERR = 1e-10;
-const double answer = 410.474747252 / 16000;
 
 int main() {
     ios::sync_with_stdio(false);
     cin >> d >> s;
-    cout << answer << endl;
     s /= d;
     double l = asinh(2 * s);
     double r = 100;

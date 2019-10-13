@@ -1,5 +1,5 @@
 
-#include <bits/stdc++.h>
+#include "geo.h"
 
 using namespace std;
 
@@ -29,7 +29,7 @@ vector<circ> delaunay(const vector<pt> &v) {
     for(int i = 3; i < n; i++) {
         pt p = v[i];
         int d = tri.size(), b = 0;
-        edge.clear(), poly.clear();
+        edge.clear();
         for(int j = 0; j < d; j++) {
             if(abs(p - tri[j].c) < tri[j].r) {
                 b++;
@@ -41,14 +41,11 @@ vector<circ> delaunay(const vector<pt> &v) {
                 tri[j - b] = tri[j];
             }
         }
+        tri.erase(tri.end() - b, tri.end());
         for(auto &e : edge) {
             if(e.second == 1) {
-                poly.push_back(e.first);
+                tri.push_back(circ({e.first.first, e.first.second, i}, v));
             }
-        }
-        tri.erase(tri.end() - b, tri.end());
-        for(auto &e : poly) {
-            tri.push_back(circ({e.first, e.second, i}, v));
         }
     }
     return tri;
@@ -91,5 +88,5 @@ int main() {
         v.push_back(p);
     }
     vector<circ> tri = delaunay(v);
-    vector<vector<int> > adj = makeVoronoi(tri);
+    makeVoronoi(tri);
 }

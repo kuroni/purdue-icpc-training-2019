@@ -108,7 +108,7 @@ vector<pt> linecircle(pt a, pt b, pt c, double r) {
 vector<pt> circlecircle(pt a, pt b, double r, double R) {
     double d = abs(b - a);
     if(d > r + R || d + min(r, R) < max(r, R)) return {};
-    double k = asin(clamp((R * R - r * r - d * d) / (2 * r * d), 0.0, 1.0));
+    double k = asin(clamp((R * R - r * r - d * d) / (2 * r * d), -1.0, 1.0));
     double t = k - arg(b - a);
     return {a + polar(r, t), a + polar(r, t + M_PI - 2 * k)};
 }

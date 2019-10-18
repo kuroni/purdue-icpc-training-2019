@@ -1,25 +1,12 @@
-
-#include <bits/stdc++.h>
-using namespace std;
-
 #define pt complex<double>
 #define x real()
 #define y imag()
 #define dot(u, v) (conj(u) * (v)).x
 #define cross(u, v) (conj(u) * (v)).y
 
-// We store points as complex numbers.
-// The point (a, b) is stored as a + bi.
-// Useful functions include:
-//      arg(p)      CCW angle of point from x-axis
-//      polar(r, t) Point from polar coordinates
-//      norm(p)     Square distance from p to origin
-//      abs(p)      Distance from p to origin
-
 const double EPS = 1e-12;
 const pt I(0, 1);
 
-// Input a point as a pair of double coordinates
 istream &operator>>(istream &is, pt &p) {
     double X, Y;
     is >> X >> Y;
@@ -108,9 +95,10 @@ vector<pt> linecircle(pt a, pt b, pt c, double r) {
 vector<pt> circlecircle(pt a, pt b, double r, double R) {
     double d = abs(b - a);
     if(d > r + R || d + min(r, R) < max(r, R)) return {};
-    double k = asin(clamp((R * R - r * r - d * d) / (2 * r * d), -1.0, 1.0));
-    double t = k - arg(b - a);
-    return {a + polar(r, t), a + polar(r, t + M_PI - 2 * k)};
+    double X = (d * d - R * R + r * r) / (2 * d);
+    pt p(X, sqrt(max(0.0, r * r - X * X)));
+    pt v = (b - a) / d;
+    return {a + v * p, a + v * conj(p)};
 }
 
 // returns signed area of polygon v.
@@ -134,40 +122,4 @@ pt centroid(const vector<pt> &v) {
         c += (v[i] + v[j]) * cross(v[i], v[j]);
     }
     return c / scale;
-}
-
-int main() {
-    cerr << pt(2, 5) * I << endl;
-    cerr << (pt(2, 5) * (-I)) << endl;
-    cerr << pt(2, 5) * polar(1.0, M_PI / 2) << endl;
-    cerr << pjline(pt(-5, -2), pt(10, 4), pt(3, 7)) << endl;
-    cerr << pjseg(pt(-5, -2), pt(10, 4), pt(3, 7)) << " "
-         << pjseg(pt(7.5, 3), pt(10, 4), pt(3, 7)) << " "
-         << pjseg(pt(-5, -2), pt(2.5, 1), pt(3, 7)) << endl;
-    cerr << reflect(5, pt(6, 1), pt(5, 2)) << endl;
-    cerr << parallel(pt(1, 1), pt(3, 5), pt(2, 1), pt(4, 5)) << " "
-         << parallel(pt(1, 1), pt(3, 5), pt(2, 0), pt(4, 5)) << " "
-         << parallel(pt(1, 1), pt(3, 5), pt(5, 9), pt(7, 13)) << endl;
-    cerr << segseg(0, pt(2, 4), pt(3, 1), pt(-1, 3)) << " "
-         << segseg(0, pt(2, 4), pt(4, 3), pt(0, 5)) << " "
-         << segseg(0, pt(2, 4), pt(2, -1), pt(-2, 1)) << " "
-         << segseg(0, pt(2, 4), pt(5, 5), pt(1, 7)) << endl;
-    cerr << lineline(pt(0, 0), pt(2, 4), pt(3, 1), pt(-1, 3)) << endl;
-    cerr << circumcenter(pt(-3, 4), pt(6, 1), pt(4, 5)) << endl;
-
-    vector<pt> v = {0, 5, pt(5, 5), pt(0, 5)};
-    cerr << inpoly(v, pt(2, 2)) << " " 
-         << inpoly(v, 2) << " "
-         << inpoly(v, pt(0, 2)) << " " 
-         << inpoly(v, pt(5, 2)) << " " 
-         << inpoly(v, pt(2, 5)) << endl;
-    cerr << onpoly(v, pt(2, 2)) << " "
-         << onpoly(v, 2) << " "
-         << onpoly(v, pt(0, 2)) << " "
-         << onpoly(v, pt(5, 2)) << " "
-         << onpoly(v, pt(2, 5)) << endl;
-
-    v = {0, 5, pt(1, 1), pt(0, 5)};
-    cerr << "Area: " << polyarea(v) << endl;
-    cerr << "Centroid: " << centroid(v) << endl;
 }

@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 const int N = 5E5 + 5;
 
 struct STree {
@@ -50,4 +47,3 @@ struct STree {
 #undef lc
 #undef rc
 } seg;
-

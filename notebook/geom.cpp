@@ -87,7 +87,7 @@ bool onpoly(const vector<pt> &v, pt q) {
 vector<pt> linecircle(pt a, pt b, pt c, double r) {
     pt p = pjline(a, b, c) - c;
     if(norm(p) > r * r + EPS) return {};
-    pt v = sqrt(max(r * r - norm(p), 0.0)) * p * I;
+    pt v = p * I * sqrt(max(r * r / norm(p) - 1, 0.0));
     return {c + p + v, c + p - v};
 }
 
@@ -95,10 +95,9 @@ vector<pt> linecircle(pt a, pt b, pt c, double r) {
 vector<pt> circlecircle(pt a, pt b, double r, double R) {
     double d = abs(b - a);
     if(d > r + R || d + min(r, R) < max(r, R)) return {};
-    double X = (d * d - R * R + r * r) / (2 * d);
-    pt p(X, sqrt(max(0.0, r * r - X * X)));
-    pt v = (b - a) / d;
-    return {a + v * p, a + v * conj(p)};
+    pt p = (b - a) * (1 + (r * r - R * R) / norm(b - a)) / 2.0;
+    pt v = p * I * sqrt(max(r * r / norm(p) - 1, 0.0));
+    return {a + p + v, a + p - v};
 }
 
 // returns signed area of polygon v.

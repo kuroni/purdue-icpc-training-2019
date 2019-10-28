@@ -1,6 +1,6 @@
 const int N = 5E5 + 5;
 
-struct STree {
+struct segment_tree {
 #define m (l + r) / 2
 #define lc i * 2
 #define rc i * 2 + 1

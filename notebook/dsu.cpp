@@ -1,18 +1,22 @@
 const int N = 1e5 + 5;
-int par[N], sz[N];
+int dsu[N]; // negative and equals to -size if root, parent if non-root
 
-int find(int x) {
-    return par[x] == -1 ? x : par[x] = find(par[x]);
+int trace(int u) {
+    return dsu[u] < 0 ? u : dsu[u] = trace(dsu[u]);
 }
-void join(int x, int y) {
-    x = find(x), y = find(y);
-    if(x == y) return;
-    if(sz[x] < sz[y]) swap(x, y);
-    sz[x] += sz[y];
-    par[y] = x;
+
+bool connect(int u, int v) {
+    if ((u = trace(u)) == (v = trace(v))) {
+        return false;
+    }
+    if (dsu[u] > dsu[v]) {
+        swap(u, v);
+    }
+    dsu[u] += dsu[v];
+    dsu[v] = u;
+    return true;
 }
 
 int main() {
-    fill(par, par + N, -1);
-    fill(sz, sz + N, 1);
+    fill(dsu, dsu + N, -1);
 }

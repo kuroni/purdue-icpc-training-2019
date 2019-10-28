@@ -41,9 +41,9 @@ pair<ll, ll> crt(ll r1, ll m1, ll r2, ll m2) {
 }
 
 pair<ll, ll> crt(const vector<ll> &r, const vector<ll> &m) {
-    pair<ll, ll> ret = {r[0], m[0]};
+    pair<ll, ll> ret = {0, 1};
     int n = m.size();
-    for(int i = 1; i < n; i++) {
+    for(int i = 0; i < n; i++) {
         ret = crt(ret.first, ret.second, r[i], m[i]);
         if(ret.second == -1) break;
     }

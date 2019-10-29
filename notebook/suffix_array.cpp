@@ -60,12 +60,10 @@ int lcp(int u, int v) {
 
 void build_suffix_tree() {
     for (int i = 0; i < n; i++) {
-        if (s[i] != '\0') {
-            ++cnt;
-            dep[cnt] = n - i;
-            pos[cnt] = i;
-            ve.push_back(cnt);
-        }
+        ++cnt;
+        dep[cnt] = n - i;
+        pos[cnt] = i;
+        ve.push_back(cnt);
     }
     sort(ve.begin(), ve.end(), [&](const int &u, const int &v) {
         return spr[pos[u]][lg] < spr[pos[v]][lg];
